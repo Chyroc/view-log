@@ -1,3 +1,3 @@
-module github.com/Chyroc/view-log
+module github.com/Chyroc/vlog
 
 require github.com/magefile/mage v2.2.0+incompatible

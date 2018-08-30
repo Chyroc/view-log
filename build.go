@@ -26,5 +26,9 @@ func addOSExecType(str string) string {
 }
 
 func Build() error {
-	return sh.RunV(goexe, "build", "-o", "bin/view-log", addOSExecType("github.com/Chyroc/view-log/cmd/view-log"))
+	err:= sh.RunV(goexe, "build", "-o", "bin/vlog", addOSExecType("github.com/Chyroc/vlog/cmd/vlog"))
+	if err != nil {
+		return err
+	}
+	return sh.RunV(goexe, "build", "-o", "bin/vlog-cli", addOSExecType("github.com/Chyroc/vlog/cmd/vlog-cli"))
 }
