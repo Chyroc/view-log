@@ -1,0 +1,6 @@
+[http]
+port = 5609
+
+[watch]
+file = "/tmp/log/1.log"
+
