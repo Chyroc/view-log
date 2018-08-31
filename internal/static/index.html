@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/0.3.4/sockjs.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Client</title>
+</head>
+
+
+<script>
+    var sock = new SockJS('{{ .Server }}/ws/');
+
+    sock.onopen = function () {
+        document.getElementById("websocket_status").innerHTML = "connected to {{ .Server }}";
+    };
+
+    sock.onmessage = function (e) {
+        $("#output").append("<li>" + e.data + "</li>");
+    };
+
+    sock.onclose = function () {
+        document.getElementById("websocket_status").innerHTML = "disconnected";
+    };
+
+    $(document).ready(function () {
+    });
+</script>
+
+
+<body>
+
+<h1>Client</h1>
+
+websocket 状态: <span id="websocket_status">connecting...</span>
+
+
+</br><br/>
+
+收到服务器消息:
+<button type="button" onclick="$('#output').empty()">清空消息</button>
+
+</br>
+
+<div>
+    <ul id="output">
+
+    </ul>
+</div>
+
+<br/>
+
+</body>
+</html>
