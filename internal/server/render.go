@@ -1,6 +1,8 @@
 package server
 
 import (
+	"encoding/json"
+	"io"
 	"io/ioutil"
 	"net/http"
 
@@ -33,4 +35,9 @@ func RenderHTML(w http.ResponseWriter, r *http.Request, view string, data map[st
 	render.HTML(w, r, string(html))
 
 	return nil
+}
+
+func BindJSON(r *http.Request, obj interface{}) error {
+	defer io.Copy(ioutil.Discard, r.Body)
+	return json.NewDecoder(r.Body).Decode(obj)
 }

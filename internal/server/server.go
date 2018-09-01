@@ -18,7 +18,7 @@ func New() *Server {
 	app.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		RenderHTML(w, r, "index", map[string]interface{}{"Server": common.Config.HTTP.Server})
 	})
-	app.API("/api")
+	app.Command("/cmd")
 	app.Websocket("/ws")
 	app.StaticFile("/", "./internal/static/")
 

@@ -4,6 +4,8 @@ import (
 	"fmt"
 
 	"github.com/c-bata/go-prompt"
+
+	"github.com/Chyroc/vlog/internal/command"
 )
 
 func RunApp() {
@@ -17,13 +19,15 @@ func RunApp() {
 }
 
 func executor(s string) {
-	cmd := getCommand(s)
-	if cmd == nil {
-		fmt.Printf("unknown command: %s\n", s)
+	out, err := command.RunWithString(s, true)
+	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
-	fmt.Println(s)
+	if out != "" {
+		fmt.Println(out)
+	}
 }
 
 func completer(prompt.Document) []prompt.Suggest {
