@@ -22,6 +22,7 @@ type http struct {
 }
 
 type watch struct {
+	Dir  string `json:"dir"`
 	File string `json:"file"`
 }
 

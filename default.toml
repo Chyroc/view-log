@@ -3,5 +3,6 @@ ip = "127.0.0.1"
 port = 5609
 
 [watch]
+dir = "/tmp/log"
 file = "/tmp/log/1.log"
 

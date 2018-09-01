@@ -17,4 +17,6 @@ go run bootstrap.go
 
 Targets:
   build
+  fmt
+  import
 ```

@@ -1,35 +1,44 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
+
+	"github.com/urfave/cli"
 
 	"github.com/Chyroc/vlog/internal/cmd"
 	"github.com/Chyroc/vlog/internal/common"
 )
 
-var config string
-
-func init() {
-	flag.StringVar(&config, "config", "default.toml", "config")
-	flag.Parse()
-}
-
 func main() {
-	if config == "" {
-		fmt.Println("config is empty")
+	app := cli.NewApp()
+	app.Name = "vlog"
+	app.Usage = "view log on remote server"
+	app.Action = func(c *cli.Context) error {
+		config := c.String("config")
+		if config == "" {
+			return cli.ShowAppHelp(c)
+		}
+
+		if err := common.LoadConf(config); err != nil {
+			return err
+		}
+
+		fmt.Println("start: " + common.Config.HTTP.Server)
+		return http.ListenAndServe(":"+strconv.Itoa(common.Config.HTTP.Port), cmd.NewServer())
+	}
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "config, c",
+			Value: "default.toml",
+			Usage: "vlog server config",
+		},
 	}
 
-	if err := common.LoadConf(config); err != nil {
-		log.Println(err)
-		return
-	}
-
-	fmt.Println("start: " + common.Config.HTTP.Server)
-	if err := http.ListenAndServe(":"+strconv.Itoa(common.Config.HTTP.Port), cmd.NewServer()); err != nil {
+	if err := app.Run(os.Args); err != nil {
 		log.Fatal(err)
 	}
 }
