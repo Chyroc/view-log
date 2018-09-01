@@ -9,8 +9,8 @@ import (
 
 	"github.com/urfave/cli"
 
-	"github.com/Chyroc/vlog/internal/cmd"
 	"github.com/Chyroc/vlog/internal/common"
+	"github.com/Chyroc/vlog/internal/server"
 )
 
 func main() {
@@ -28,7 +28,7 @@ func main() {
 		}
 
 		fmt.Println("start: " + common.Config.HTTP.Server)
-		return http.ListenAndServe(":"+strconv.Itoa(common.Config.HTTP.Port), cmd.NewServer())
+		return http.ListenAndServe(":"+strconv.Itoa(common.Config.HTTP.Port), server.New())
 	}
 	app.Flags = []cli.Flag{
 		cli.StringFlag{

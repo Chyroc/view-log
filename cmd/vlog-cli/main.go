@@ -4,15 +4,18 @@ import (
 	"log"
 	"os"
 
-	"github.com/urfave/cli"
+	ucli "github.com/urfave/cli"
+
+	"github.com/Chyroc/vlog/internal/cli"
 )
 
 func main() {
-	app := cli.NewApp()
+	app := ucli.NewApp()
 	app.Name = "vlog-cli"
 	app.Usage = "connect to vlog server and do sth"
-	app.Action = func(c *cli.Context) error {
-		return cli.ShowAppHelp(c)
+	app.Action = func(c *ucli.Context) error {
+		cli.RunApp()
+		return nil
 	}
 
 	if err := app.Run(os.Args); err != nil {
